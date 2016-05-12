@@ -123,6 +123,7 @@ exports.format = {
 
     bytes: function (test) {
         var tests = [
+                [0, '0 b', '0 B'],
                 [100,'0b','100B'],
                 [1024*2,'0 b','2 KB'],
                 [1024*1024*5,'0b','5MB'],
@@ -132,7 +133,9 @@ exports.format = {
                 [1024*1024*1024*1024*1024*1024*1024*1024*1024, '0 b', '1024 YB']
             ].reduce(function (tests, test) {
               tests.push(test);
-              tests.push([test[0] * -1, test[1], '-' + test[2]]);
+              if (test[0] > 0) {
+                tests.push([test[0] * -1, test[1], '-' + test[2]]);
+              }
               return tests;
             }, []),
             i;

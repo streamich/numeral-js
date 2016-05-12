@@ -229,30 +229,31 @@
 
     function formatByteUnits (value) {
         var suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-            suffix = suffixes[suffixes.length - 1],
+            suffix = suffixes[0],
             power,
             min,
             max,
             abs = Math.abs(value),
-            matched = false;
+            matched = (abs < 1024);
 
-        for (power = 0; power < suffixes.length; ++power) {
-            min = Math.pow(1024, power);
-            max = Math.pow(1024, power + 1);
-
-            if (abs >= min && abs < max) {
-                matched = true;
-                suffix = suffixes[power];
-                if (min > 0) {
-                    value = value / min;
-                }
-                break;
-            }
-        }
-
-        // values greater than or equal to 1024 YB
         if (!matched) {
-            value = value / Math.pow(1024, suffixes.length - 1);
+            for (power = 1; power < suffixes.length; ++power) {
+                min = Math.pow(1024, power);
+                max = Math.pow(1024, power + 1);
+
+                if (abs >= min && abs < max) {
+                    matched = true;
+                    suffix = suffixes[power];
+                    value = value / min;
+                    break;
+                }
+            }
+
+            // values greater than or equal to 1024 YB
+            if (!matched) {
+                value = value / Math.pow(1024, suffixes.length - 1);
+                suffix = suffixes[suffixes.length - 1];
+            }
         }
 
         return { value: value, suffix: suffix };
