@@ -24,7 +24,7 @@ exports.format = {
             i;
 
         test.expect(test.length);
-        
+
         for (i = 0; i < tests.length; i++) {
             format = n.format(test[i]);
             test.strictEqual(n.value(), value, 'value unchanged after format' + test[i]);
@@ -65,6 +65,8 @@ exports.format = {
                 [52,'0 o','52 nd'],
                 [23,'0o','23rd'],
                 [100,'0o','100th'],
+                [1.005,'0.00','1.01'],
+                [1e35,'000','1e+35'],
 
                 // specified abbreviations
                 [-5444333222111, '0,0 aK', '-5,444,333,222 k'],
@@ -183,7 +185,7 @@ exports.format = {
 
         test.done();
     },
-    
+
     rounding: function (test) {
       var tests = [
             // value, format string, expected w/ floor, expected w/ ceil
@@ -194,19 +196,19 @@ exports.format = {
             [-0.433,'0 %','-44 %', '-43 %']
         ],
         i;
-      
+
       test.expect(tests.length * 2);
-      
+
       for (i = 0; i < tests.length; i++) {
           // floor
           test.strictEqual(numeral(tests[i][0]).format(tests[i][1], Math.floor), tests[i][2], tests[i][1] + ", floor");
-          
+
           // ceil
-          test.strictEqual(numeral(tests[i][0]).format(tests[i][1], Math.ceil), tests[i][3], tests[i][1] + ", ceil"); 
-         
+          test.strictEqual(numeral(tests[i][0]).format(tests[i][1], Math.ceil), tests[i][3], tests[i][1] + ", ceil");
+
       }
-      
+
       test.done();
-      
+
     },
 };
