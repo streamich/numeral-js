@@ -27,7 +27,16 @@ describe('Bytes', function() {
                 [Math.pow(decimal, 3) * 7.343,'0.[0] b','7.3 GB'],
                 [Math.pow(decimal, 4) * 3.1536544,'0.000b','3.154TB'],
                 [Math.pow(decimal, 5) * 2.953454534534,'0b','3PB']
-            ],
+            ].reduce(function (tests, test) {
+              tests.push(test);
+              tests.push(
+                [test[0] * -1,
+                test[1],
+                // -0 should render as 0
+                (test !== 0 ? '' : '-') + test[2]]
+              );
+              return tests;
+            }, []),
             i;
 
         for (i = 0; i < tests.length; i++) {

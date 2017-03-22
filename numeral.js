@@ -703,10 +703,12 @@
                 suffix = numeral._.includes(format, ' b') || numeral._.includes(format, ' ib') ? ' ' : '',
                 power,
                 min,
-                max;
+                max,
+                negative = false;
 
             // check for space before
             format = format.replace(/\s?i?b/, '');
+            value = Math.abs(value);
 
             for (power = 0; power <= bytes.suffixes.length; power++) {
                 min = Math.pow(bytes.base, power);
@@ -723,7 +725,7 @@
                 }
             }
 
-            output = numeral._.numberToFormat(value, format, roundingFunction);
+            output = numeral._.numberToFormat(negative ? value * -1 : value, format, roundingFunction);
 
             return output + suffix;
         },
