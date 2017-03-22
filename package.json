@@ -1,6 +1,6 @@
 {
-  "name": "@spalger/numeral",
-  "version": "2.2.1",
+  "name": "@elastic/numeral",
+  "version": "3.0.0",
   "description": "Fork of numeraljs for use in Kibana",
   "author": {
     "name": "Adam Draper",
