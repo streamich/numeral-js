@@ -1,5 +1,5 @@
 {
-  "name": "@spalger/numeral",
+  "name": "@elastic/numeral",
   "version": "2.2.1",
   "description": "Format and manipulate numbers.",
   "homepage": "http://numeraljs.com",
