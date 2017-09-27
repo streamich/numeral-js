@@ -1,11 +1,16 @@
 {
-  "name": "@elastic/numeral",
-  "version": "3.0.0",
-  "description": "Fork of numeraljs for use in Kibana",
-  "author": {
-    "name": "Adam Draper",
-    "email": "adamwdraper@gmail.com",
-    "url": "http://github.com/adamwdraper"
+  "name": "@spalger/numeral",
+  "version": "2.2.1",
+  "description": "Format and manipulate numbers.",
+  "homepage": "http://numeraljs.com",
+  "authors": [
+    "Adam Draper <adamwdraper@gmail.com> (http://github.com/adamwdraper)",
+    "Spencer Alger <email@spalger.com>",
+    "Chris Earle <pickypg+npm@elastic.co>"
+  ],
+  "scripts": {
+    "test": "grunt",
+    "build": "grunt build"
   },
   "keywords": [
     "numeral",
@@ -17,39 +22,20 @@
   ],
   "main": "./numeral.js",
   "engines": {
-    "node": "*"
+    "node": ">= 0.10"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/spalger/Numeral-js"
+    "url": "git+https://github.com/spalger/numeral-js.git"
   },
   "bugs": {
-    "url": "https://github.com/spalger/Numeral-js/issues"
+    "url": "https://github.com/spalger/numeral-js/issues"
   },
   "license": "MIT",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "grunt": "latest",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "latest",
-    "grunt-contrib-nodeunit": "1.0.0",
-    "grunt-contrib-uglify": "latest",
-    "grunt-karma": "^2.0.0",
-    "grunt-mocha-test": "^0.13.2",
-    "grunt-saucelabs": "*",
-    "grunt-string-replace": "^1.3.1",
-    "karma": "^1.3.0",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-mocha": "^1.3.0",
-    "karma-mocha-reporter": "^2.2.1",
-    "karma-sauce-launcher": "^1.1.0",
-    "load-grunt-tasks": "^3.5.2",
-    "mocha": "^3.1.2",
-    "uglify-js": "latest"
-  },
-  "scripts": {
-    "test": "grunt"
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-nodeunit": "^1.0.0"
   }
 }
