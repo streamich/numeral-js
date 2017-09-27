@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "grunt",
-    "build": "grunt build"
+    "build": "grunt build-languages"
   },
   "main": "./numeral.js",
   "engines": {
