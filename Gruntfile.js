@@ -43,14 +43,14 @@ module.exports = function(grunt) {
         // 'jshint',
         'nodeunit'
     ]);
-    
+
     grunt.registerTask('build-languages', function () {
       const langs = fs.readdirSync(path.resolve(__dirname, 'languages'))
         .map(filename => {
           const id = filename.split('.js')[0]
           const content = fs.readFileSync(path.resolve(__dirname, 'languages', filename), 'utf8');
           const name = content.match(/(?:\*|\/\/)\s*language\s*:\s*(.+)$/m)[1]
-          
+
           const lines = content.split('\n');
           const start = lines.findIndex(line => line.match(/^\s{4}var\s+language\s+=\s+\{/))
           const end = lines.findIndex(line => line.match(/^\s{4}\};/))
@@ -60,12 +60,12 @@ module.exports = function(grunt) {
           if (end === -1) {
             throw new Error('could not find end');
           }
-          
+
           const code = lines.slice(start + 1, end);
           if (!code[0].match(/^\s{8}delimiters: {$/)) {
             throw new Error('code does not look right');
           }
-          
+
           return `{
             id: '${id}',
             name: '${name}',
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
           }`
         })
         .join(',\n');
-        
+
       fs.writeFileSync(
         path.resolve(__dirname, './languages.js'),
         prettier.format(`module.exports = [${langs}]`, {
