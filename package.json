@@ -1,6 +1,6 @@
 {
   "name": "@elastic/numeral",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Format and manipulate numbers.",
   "homepage": "http://numeraljs.com",
   "authors": [
