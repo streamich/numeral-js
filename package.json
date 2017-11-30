@@ -1,6 +1,6 @@
 {
   "name": "@elastic/numeral",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Fork of numeraljs for use in Kibana",
   "authors": [
     "Adam Draper <adamwdraper@gmail.com> (http://github.com/adamwdraper)",
@@ -24,10 +24,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "prettier": "*",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-nodeunit": "^1.0.0"
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "prettier": "*"
   }
 }
