@@ -279,7 +279,7 @@ var numeralFactory = function () {
         if (value === 0 && zeroFormat !== null) {
             return zeroFormat;
         } else {
-            var isExponent = 'number' === typeof value && value.toString().match(/e\+/);
+            var isExponent = 'number' === typeof value && value.toString().match(/e[+-]/);
             // see if we should use parentheses for negative number or if we should prefix with a sign
             // if both are present we default to parentheses
             if (format.indexOf('(') > -1) {
@@ -390,8 +390,8 @@ var numeralFactory = function () {
                 else w = toFixed(value, 0, roundingFunction);
             }
 
-            // format number
-            if (w.indexOf('-') > -1) {
+            // format negative number
+            if (w.indexOf('-') === 0) {
                 w = w.slice(1);
                 neg = true;
             }
