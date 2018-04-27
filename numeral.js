@@ -375,7 +375,7 @@ var numeralFactory = function () {
 
                 w = d.split('.')[0];
 
-                if (d.split('.')[1].length) {
+                if (d.indexOf('.') != -1 && d.split('.')[1].length) {
                     d = languages[currentLanguage].delimiters.decimal + d.split('.')[1];
                 } else {
                     d = '';
