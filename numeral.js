@@ -199,7 +199,7 @@ var numeralFactory = function () {
     function formatTime (n) {
         var hours = Math.floor(Math.abs(n._value)/60/60),
             minutes = Math.floor((Math.abs(n._value) - (hours * 60 * 60))/60),
-            seconds = Math.round(Math.abs(n._value) - (hours * 60 * 60) - (minutes * 60));
+            seconds = Math.round(Math.abs(n._value) - (hours * 60 * 60) - (minutes * 60)),
             direction = n._value < 0 ? '-' : '';
         return direction + hours + ':' + ((minutes < 10) ? '0' + minutes : minutes) + ':' + ((seconds < 10) ? '0' + seconds : seconds);
     }
