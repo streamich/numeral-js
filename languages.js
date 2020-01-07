@@ -1,7 +1,7 @@
 module.exports = [
   {
     id: 'be-nl',
-    name: 'belgium-dutch (be-nl)',
+    name: 'Dutch (Belgium)',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -24,7 +24,7 @@ module.exports = [
   },
   {
     id: 'chs',
-    name: 'simplified chinese',
+    name: 'Simplified Chinese',
     lang: {
       delimiters: {
         thousands: ',',
@@ -46,7 +46,7 @@ module.exports = [
   },
   {
     id: 'cs',
-    name: 'czech (cs)',
+    name: 'Czech',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -68,7 +68,7 @@ module.exports = [
   },
   {
     id: 'da-dk',
-    name: 'danish denmark (dk)',
+    name: 'Danish (Denmark)',
     lang: {
       delimiters: {
         thousands: '.',
@@ -90,7 +90,7 @@ module.exports = [
   },
   {
     id: 'de-ch',
-    name: 'German in Switzerland (de-ch)',
+    name: 'German (Switzerland)',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -112,7 +112,7 @@ module.exports = [
   },
   {
     id: 'de',
-    name: 'German (de) – generally useful in Germany, Austria, Luxembourg, Belgium',
+    name: 'German',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -134,7 +134,7 @@ module.exports = [
   },
   {
     id: 'en-gb',
-    name: 'english united kingdom (uk)',
+    name: 'English (UK)',
     lang: {
       delimiters: {
         thousands: ',',
@@ -157,7 +157,7 @@ module.exports = [
   },
   {
     id: 'es-ES',
-    name: 'spanish Spain',
+    name: 'Spanish (Spain)',
     lang: {
       delimiters: {
         thousands: '.',
@@ -182,7 +182,7 @@ module.exports = [
   },
   {
     id: 'es',
-    name: 'spanish',
+    name: 'Spanish',
     lang: {
       delimiters: {
         thousands: '.',
@@ -251,7 +251,7 @@ module.exports = [
   },
   {
     id: 'fr-CA',
-    name: 'french (Canada) (fr-CA)',
+    name: 'French (Canada)',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -273,7 +273,7 @@ module.exports = [
   },
   {
     id: 'fr-ch',
-    name: 'french (fr-ch)',
+    name: 'French (Switzerland)',
     lang: {
       delimiters: {
         thousands: "'",
@@ -295,7 +295,7 @@ module.exports = [
   },
   {
     id: 'fr',
-    name: 'french (fr)',
+    name: 'French',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -317,7 +317,7 @@ module.exports = [
   },
   {
     id: 'hu',
-    name: 'Hungarian (hu)',
+    name: 'Hungarian',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -339,7 +339,7 @@ module.exports = [
   },
   {
     id: 'it',
-    name: 'italian Italy (it)',
+    name: 'Italian',
     lang: {
       delimiters: {
         thousands: '.',
@@ -361,7 +361,7 @@ module.exports = [
   },
   {
     id: 'ja',
-    name: 'japanese',
+    name: 'Japanese',
     lang: {
       delimiters: {
         thousands: ',',
@@ -383,7 +383,7 @@ module.exports = [
   },
   {
     id: 'nl-nl',
-    name: 'netherlands-dutch (nl-nl)',
+    name: 'Dutch (Netherlands)',
     lang: {
       delimiters: {
         thousands: '.',
@@ -406,7 +406,7 @@ module.exports = [
   },
   {
     id: 'pl',
-    name: 'polish (pl)',
+    name: 'Polish',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -428,7 +428,7 @@ module.exports = [
   },
   {
     id: 'pt-br',
-    name: 'portuguese brazil (pt-br)',
+    name: 'Portuguese (Brazil)',
     lang: {
       delimiters: {
         thousands: '.',
@@ -450,7 +450,7 @@ module.exports = [
   },
   {
     id: 'pt-pt',
-    name: 'portuguese (pt-pt)',
+    name: 'Portuguese',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -472,7 +472,7 @@ module.exports = [
   },
   {
     id: 'ru-UA',
-    name: 'Russian for the Ukraine (ru-UA)',
+    name: 'Russian (Ukraine)',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -497,7 +497,7 @@ module.exports = [
   },
   {
     id: 'ru',
-    name: 'russian (ru)',
+    name: 'Russian',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -522,7 +522,7 @@ module.exports = [
   },
   {
     id: 'sk',
-    name: 'slovak (sk)',
+    name: 'Slovak',
     lang: {
       delimiters: {
         thousands: ' ',
@@ -544,7 +544,7 @@ module.exports = [
   },
   {
     id: 'th',
-    name: 'thai (th)',
+    name: 'Thai',
     lang: {
       delimiters: {
         thousands: ',',
@@ -566,7 +566,7 @@ module.exports = [
   },
   {
     id: 'tr',
-    name: 'turkish (tr)',
+    name: 'Turkish',
     lang: {
       delimiters: {
         thousands: '.',
@@ -625,7 +625,7 @@ module.exports = [
   },
   {
     id: 'uk-UA',
-    name: 'Ukrainian for the Ukraine (uk-UA)',
+    name: 'Ukrainian',
     lang: {
       delimiters: {
         thousands: ' ',
