@@ -224,19 +224,22 @@ var numeralFactory = function () {
         return Number(seconds);
     }
 
-    function formatByteUnits (value) {
-        var suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    function formatByteUnits (value, decimal) {
+        var base = !!decimal ? 1000 : 1024,
+            suffixes = !!decimal ?
+                ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] :
+                ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
             suffix = suffixes[0],
             power,
             min,
             max,
             abs = Math.abs(value),
-            matched = (abs < 1024);
+            matched = (abs < base);
 
         if (!matched) {
             for (power = 1; power < suffixes.length; ++power) {
-                min = Math.pow(1024, power);
-                max = Math.pow(1024, power + 1);
+                min = Math.pow(base, power);
+                max = Math.pow(base, power + 1);
 
                 if (abs >= min && abs < max) {
                     matched = true;
@@ -246,9 +249,9 @@ var numeralFactory = function () {
                 }
             }
 
-            // values greater than or equal to 1024 YB
+            // values greater than or equal to 1000/1024 YB
             if (!matched) {
-                value = value / Math.pow(1024, suffixes.length - 1);
+                value = value / Math.pow(base, suffixes.length - 1);
                 suffix = suffixes[suffixes.length - 1];
             }
         }
@@ -327,8 +330,21 @@ var numeralFactory = function () {
                 }
             }
 
-            // see if we are formatting bytes
-            if (format.indexOf('b') > -1) {
+            // see if we are formatting bytes in decimal or binary
+            if (format.indexOf('bd') > -1) {
+                // check for space before
+                if (format.indexOf(' bd') > -1) {
+                    bytes = ' ';
+                    format = format.replace(' bd', '');
+                } else {
+                    format = format.replace('bd', '');
+                }
+
+                units = formatByteUnits(value, true);
+
+                value = units.value;
+                bytes = bytes + units.suffix;
+            } else if (format.indexOf('b') > -1) {
                 // check for space before
                 if (format.indexOf(' b') > -1) {
                     bytes = ' ';
@@ -337,7 +353,7 @@ var numeralFactory = function () {
                     format = format.replace('b', '');
                 }
 
-                units = formatByteUnits(value);
+                units = formatByteUnits(value, false);
 
                 value = units.value;
                 bytes = bytes + units.suffix;
@@ -618,8 +634,8 @@ var numeralFactory = function () {
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
-        byteUnits : function () {
-            return formatByteUnits(this._value).suffix;
+        byteUnits : function (decimal) {
+            return formatByteUnits(this._value, decimal).suffix;
         },
 
         value : function () {
