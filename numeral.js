@@ -224,11 +224,11 @@ var numeralFactory = function () {
         return Number(seconds);
     }
 
-    function formatByteUnits (value, decimal) {
-        var base = !!decimal ? 1000 : 1024,
-            suffixes = !!decimal ?
-                ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] :
-                ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
+    function formatByteUnits (value, isDecimal, useStandardSuffix) {
+        var base = !!isDecimal ? 1000 : 1024,
+            suffixes = (!isDecimal && useStandardSuffix) ?
+                ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'] :
+                ['B', isDecimal ? 'kB' : 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             suffix = suffixes[0],
             power,
             min,
@@ -340,7 +340,28 @@ var numeralFactory = function () {
                     format = format.replace('bd', '');
                 }
 
-                units = formatByteUnits(value, true);
+                units = formatByteUnits(
+                    value,
+                    true, // use base 1000
+                    true // use standard decimal suffixes
+                );
+
+                value = units.value;
+                bytes = bytes + units.suffix;
+            } else if (format.indexOf('bb') > -1) {
+                // check for space before
+                if (format.indexOf(' bb') > -1) {
+                    bytes = ' ';
+                    format = format.replace(' bb', '');
+                } else {
+                    format = format.replace('bb', '');
+                }
+
+                units = formatByteUnits(
+                    value,
+                    false, // use base 1024
+                    true // When true, use KiB standards
+                );
 
                 value = units.value;
                 bytes = bytes + units.suffix;
@@ -353,7 +374,11 @@ var numeralFactory = function () {
                     format = format.replace('b', '');
                 }
 
-                units = formatByteUnits(value, false);
+                units = formatByteUnits(
+                    value,
+                    false, // use base 1024
+                    false // use non-standard KB and MB suffixes for binary
+                );
 
                 value = units.value;
                 bytes = bytes + units.suffix;
@@ -634,8 +659,8 @@ var numeralFactory = function () {
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
-        byteUnits : function (decimal) {
-            return formatByteUnits(this._value, decimal).suffix;
+        byteUnits : function (isDecimal, useStandardSuffix) {
+            return formatByteUnits(this._value, isDecimal, useStandardSuffix).suffix;
         },
 
         value : function () {
