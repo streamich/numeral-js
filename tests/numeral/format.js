@@ -169,6 +169,42 @@ exports.format = {
         test.done();
     },
 
+    bits: function (test) {
+        var tests = [
+                [0, '0 bitb', '0 bit'],
+                [100,'0bitb','100bit'],
+                [1024*2,'0 bitb','2 Kibit'],
+                [1024*1024*5,'0bitb','5Mibit'],
+                [1024*1024*1024*7.343,'0.[0] bitb','7.3 Gibit'],
+                [1024*1024*1024*1024*3.1536544,'0.000bitb','3.154Tibit'],
+                [1024*1024*1024*1024*1024*2.953454534534,'0bitb','3Pibit'],
+                [2000*1024*1024*1024*1024*1024*1024*1024*1024, '0 bitb', '2000 Yibit'],
+                [0, '0 bitd', '0 bit'],
+                [100,'0bitd','100bit'],
+                [1000*2,'0 bitd','2 kbit'],
+                [1000*1000*5,'0bitd','5Mbit'],
+                [1000*1000*1000*7.343,'0.[0] bitd','7.3 Gbit'],
+                [1000*1000*1000*1000*3.1536544,'0.000bitd','3.154Tbit'],
+                [1000*1000*1000*1000*1000*2.953454534534,'0bitd','3Pbit'],
+                [2000*1000*1000*1000*1000*1000*1000*1000*1000, '0 bitd', '2000 Ybit'],
+            ].reduce(function (tests, test) {
+              tests.push(test);
+              if (test[0] > 0) {
+                tests.push([test[0] * -1, test[1], '-' + test[2]]);
+              }
+              return tests;
+            }, []),
+            i;
+
+        test.expect(tests.length);
+
+        for (i = 0; i < tests.length; i++) {
+            test.strictEqual(numeral(tests[i][0]).format(tests[i][1]), tests[i][2], tests[i][1]);
+        }
+
+        test.done();
+    },
+
     percentages: function (test) {
         var tests = [
                 [1,'0%','100%'],
