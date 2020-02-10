@@ -67,6 +67,8 @@ var numeralFactory = function () {
             output = formatPercentage(n, format, roundingFunction);
         } else if (format.indexOf(':') > -1) { // time
             output = formatTime(n, format);
+        } else if (format.indexOf('b') > -1) { // bytes or bits
+            output = formatBytes(n, format, roundingFunction);
         } else { // plain ol' numbers or bytes
             output = formatNumber(n._value, format, roundingFunction);
         }
@@ -224,19 +226,103 @@ var numeralFactory = function () {
         return Number(seconds);
     }
 
-    function formatByteUnits (value) {
-        var suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    function formatBytes(n, format, roundingFunction) {
+        var value = n._value,
+            units,
+            bytes = '',
+            isBase1000 = false,
+            isStandard = false,
+            isBits = false;
+
+        // see if we are formatting bytes in decimal or binary
+        if (format.indexOf('bitd') > -1) {
+            // check for space before
+            if (format.indexOf(' bitd') > -1) {
+                bytes = ' ';
+                format = format.replace(' bitd', '');
+            } else {
+                format = format.replace('bitd', '');
+            }
+
+            isBase1000 = true;
+            isStandard = true;
+            isBits = true;
+        } else if (format.indexOf('bitb') > -1) {
+            // check for space before
+            if (format.indexOf(' bitb') > -1) {
+                bytes = ' ';
+                format = format.replace(' bitb', '');
+            } else {
+                format = format.replace('bitb', '');
+            }
+
+            isStandard = true;
+            isBits = true;
+        // see if we are formatting bytes in decimal or binary
+        } else if (format.indexOf('bd') > -1) {
+            // check for space before
+            if (format.indexOf(' bd') > -1) {
+                bytes = ' ';
+                format = format.replace(' bd', '');
+            } else {
+                format = format.replace('bd', '');
+            }
+
+            isBase1000 = true;
+            isStandard = true;
+        } else if (format.indexOf('bb') > -1) {
+            // check for space before
+            if (format.indexOf(' bb') > -1) {
+                bytes = ' ';
+                format = format.replace(' bb', '');
+            } else {
+                format = format.replace('bb', '');
+            }
+
+            isStandard = true;
+        } else if (format.indexOf('b') > -1) {
+            // check for space before
+            if (format.indexOf(' b') > -1) {
+                bytes = ' ';
+                format = format.replace(' b', '');
+            } else {
+                format = format.replace('b', '');
+            }
+        }
+
+        units = getByteSuffix(
+            value,
+            isBase1000, // use base 1000
+            isStandard, // use standard decimal suffixes
+            isBits // use bit format
+        );
+
+        value = units.value;
+        bytes = bytes + units.suffix;
+
+        return formatNumber(value, format, roundingFunction) + bytes;
+    }
+
+    function getByteSuffix (value, isDecimal, useStandardSuffix, isBits) {
+        var base = !!isDecimal ? 1000 : 1024,
+            suffixes = !!isBits ?
+                isDecimal ?
+                    ['bit', 'kbit', 'Mbit', 'Gbit', 'Tbit', 'Pbit', 'Ebit', 'Zbit', 'Ybit'] :
+                    ['bit', 'Kibit', 'Mibit', 'Gibit', 'Tibit', 'Pibit', 'Eibit', 'Zibit', 'Yibit']
+                : (!isDecimal && useStandardSuffix) ?
+                    ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'] :
+                    ['B', isDecimal ? 'kB' : 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             suffix = suffixes[0],
             power,
             min,
             max,
             abs = Math.abs(value),
-            matched = (abs < 1024);
+            matched = (abs < base);
 
         if (!matched) {
             for (power = 1; power < suffixes.length; ++power) {
-                min = Math.pow(1024, power);
-                max = Math.pow(1024, power + 1);
+                min = Math.pow(base, power);
+                max = Math.pow(base, power + 1);
 
                 if (abs >= min && abs < max) {
                     matched = true;
@@ -246,9 +332,9 @@ var numeralFactory = function () {
                 }
             }
 
-            // values greater than or equal to 1024 YB
+            // values greater than or equal to 1000/1024 YB
             if (!matched) {
-                value = value / Math.pow(1024, suffixes.length - 1);
+                value = value / Math.pow(base, suffixes.length - 1);
                 suffix = suffixes[suffixes.length - 1];
             }
         }
@@ -266,8 +352,6 @@ var numeralFactory = function () {
             abbrB = false, // force abbreviation to billions
             abbrT = false, // force abbreviation to trillions
             abbrForce = false, // force abbreviation
-            bytes = '',
-            units,
             ord = '',
             abs = Math.abs(value),
             w,
@@ -325,22 +409,6 @@ var numeralFactory = function () {
                     abbr = abbr + languages[currentLanguage].abbreviations.thousand;
                     value = value / Math.pow(10, 3);
                 }
-            }
-
-            // see if we are formatting bytes
-            if (format.indexOf('b') > -1) {
-                // check for space before
-                if (format.indexOf(' b') > -1) {
-                    bytes = ' ';
-                    format = format.replace(' b', '');
-                } else {
-                    format = format.replace('b', '');
-                }
-
-                units = formatByteUnits(value);
-
-                value = units.value;
-                bytes = bytes + units.suffix;
             }
 
             // see if ordinal is wanted
@@ -405,7 +473,7 @@ var numeralFactory = function () {
                 w = '';
             }
 
-            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((bytes) ? bytes : '') + ((negP && neg) ? ')' : '');
+            return ((negP && neg) ? '(' : '') + ((!negP && neg) ? '-' : '') + ((!neg && signed) ? '+' : '') + w + d + ((ord) ? ord : '') + ((abbr) ? abbr : '') + ((negP && neg) ? ')' : '');
         }
     }
 
@@ -618,8 +686,8 @@ var numeralFactory = function () {
             return unformatNumeral(this, inputString ? inputString : defaultFormat);
         },
 
-        byteUnits : function () {
-            return formatByteUnits(this._value).suffix;
+        byteUnits : function (isDecimal, useStandardSuffix, isBits) {
+            return getByteSuffix(this._value, isDecimal, useStandardSuffix, isBits).suffix;
         },
 
         value : function () {
